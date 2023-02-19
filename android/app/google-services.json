@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "799403140660",
+    "project_id": "qrep-2b501",
+    "storage_bucket": "qrep-2b501.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:799403140660:android:2a88b04545ae6886488c61",
+        "android_client_info": {
+          "package_name": "com.example.qrep"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "799403140660-efpm9t8msldvql5qpkejgu83flau6vcb.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyA5-ms2nYniA8WJseAk9FqLjhCGsS9oIf4"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "799403140660-efpm9t8msldvql5qpkejgu83flau6vcb.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
