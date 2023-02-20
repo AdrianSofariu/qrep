@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:qrep/auth_service.dart';
+import 'package:qrep/main.dart';
 import 'package:qrep/pages/loginpage.dart';
 
 class HomePage extends StatelessWidget {
@@ -15,7 +17,7 @@ class HomePage extends StatelessWidget {
             children: [
               Image.asset('images/question.jpg'),
               const Text(
-                'Welcome to QREP!',
+                'Welcome to QRep!',
                 textAlign: TextAlign.center,
                 style: TextStyle(
                   color: Colors.white,
@@ -37,7 +39,7 @@ class HomePage extends StatelessWidget {
               ],
             )),
             child: const Text(
-              'Qrep is the app that helps you find the best questions and exercises to use when creating a test or quiz. Browse our repository for free or create an account to become part of the community!',
+              'QRep is the app that helps you find the best questions and exercises to use when creating a test or quiz. Browse our repository or start adding your own creations!',
               textAlign: TextAlign.justify,
               style: TextStyle(
                 fontSize: 25,
@@ -63,7 +65,13 @@ class HomePage extends StatelessWidget {
                     Navigator.of(context).push(
                       MaterialPageRoute(
                         builder: (BuildContext context) {
-                          return LoginPage();
+                          if (isloggedIn) {
+                            return const RootPage();
+                          }
+                          //modify button route
+                          else {
+                            return const LoginPage();
+                          }
                         },
                       ),
                     );

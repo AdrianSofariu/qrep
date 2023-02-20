@@ -1,8 +1,11 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:qrep/pages/auth_page.dart';
 import 'package:qrep/pages/homepage.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:qrep/pages/loginpage.dart';
 import 'firebase_options.dart';
+import 'package:qrep/auth_service.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -25,11 +28,17 @@ class _MyAppState extends State<MyApp> {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       theme: ThemeData(primarySwatch: Colors.green, fontFamily: 'Ubuntu'),
-      home: const RootPage(),
+      home: const AuthPage(),
     );
   }
 }
 
+void signUserOut() {
+  FirebaseAuth.instance.signOut();
+  isloggedIn = false;
+}
+
+//RootPage of the App
 class RootPage extends StatefulWidget {
   const RootPage({super.key});
 
@@ -39,19 +48,37 @@ class RootPage extends StatefulWidget {
 
 class _RootPageState extends State<RootPage> {
   int currentPage = 0;
-  bool isLoggedIn = false;
+
+  //final user = FirebaseAuth.instance.currentUser!;
+
+  List<Widget> pages = const [
+    HomePage(),
+  ];
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      //AppBar with login and logout functionlalities
       appBar: AppBar(
-          leading: const Icon(Icons.quiz_outlined),
-          title: const Text('Qrep'),
+          leading: Image.asset(
+            'images/QRep.png',
+            scale: 25,
+          ),
+          /*const ImageIcon(
+            AssetImage('images/QRep.png'),
+            color: Colors.amber,
+            size: 1,
+          ),*/
+          //const Icon(Icons.quiz_outlined),
+          title: const Text('QRep'),
           actions: [
-            isLoggedIn
+            isloggedIn
                 ? IconButton(
                     icon: const Icon(Icons.logout),
-                    onPressed: () {},
+                    onPressed: () {
+                      signUserOut();
+                      setState(() {});
+                    },
                   )
                 : IconButton(
                     icon: const Icon(Icons.login),
@@ -59,18 +86,30 @@ class _RootPageState extends State<RootPage> {
                       Navigator.of(context).push(
                         MaterialPageRoute(
                           builder: (BuildContext context) {
-                            return LoginPage();
+                            return const LoginPage();
                           },
                         ),
                       );
                     },
                   )
           ]),
-      body: const HomePage(),
+      body: pages[currentPage],
+      //Navigation bar for the main pages
       bottomNavigationBar: NavigationBar(
+        backgroundColor: Colors.black,
         destinations: const [
-          NavigationDestination(icon: Icon(Icons.home), label: 'Home'),
-          NavigationDestination(icon: Icon(Icons.person), label: 'Profile'),
+          NavigationDestination(
+              icon: Icon(
+                Icons.home,
+                color: Colors.white,
+              ),
+              label: 'Home'),
+          NavigationDestination(
+              icon: Icon(
+                Icons.person,
+                color: Colors.white,
+              ),
+              label: 'Profile'),
         ],
         onDestinationSelected: (int index) {
           setState(() {

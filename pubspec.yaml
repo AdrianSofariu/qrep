@@ -55,9 +55,21 @@ dev_dependencies:
   # package. See that file for information about deactivating specific lint
   # rules and activating additional ones.
   flutter_lints: ^2.0.0
+  flutter_launcher_icons:
 
 # For information on the generic Dart part of this file, see the
 # following page: https://dart.dev/tools/pub/pubspec
+
+flutter_icons:
+  android: true
+  ios: true
+  image_path: "images/QRep.png"
+  web:
+    generate: true
+    image_path: "images/QRep.png"
+    background_color: "#hexcode"
+    theme_color: "#hexcode"
+  
 
 # The following section is specific to Flutter packages.
 flutter:
@@ -73,6 +85,7 @@ flutter:
     - images/question.jpg
     - images/hometheme.png
     - images/google.png
+    - images/QRep.png
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware
