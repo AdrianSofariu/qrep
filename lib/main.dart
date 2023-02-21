@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:qrep/pages/auth_page.dart';
 import 'package:qrep/pages/homepage.dart';
 import 'package:firebase_core/firebase_core.dart';
-import 'package:qrep/pages/loginpage.dart';
+import 'package:qrep/pages/login_or_register_page.dart';
 import 'firebase_options.dart';
 import 'package:qrep/auth_service.dart';
 
@@ -86,7 +86,7 @@ class _RootPageState extends State<RootPage> {
                       Navigator.of(context).push(
                         MaterialPageRoute(
                           builder: (BuildContext context) {
-                            return const LoginPage();
+                            return const LoginOrRegisterPage();
                           },
                         ),
                       );

@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:qrep/auth_service.dart';
 import 'package:qrep/main.dart';
-import 'package:qrep/pages/loginpage.dart';
+import 'package:qrep/pages/login_or_register_page.dart';
 
 class HomePage extends StatelessWidget {
   const HomePage({super.key});
@@ -70,7 +70,7 @@ class HomePage extends StatelessWidget {
                           }
                           //modify button route
                           else {
-                            return const LoginPage();
+                            return const LoginOrRegisterPage();
                           }
                         },
                       ),
