@@ -4,6 +4,7 @@ import 'package:qrep/auth_service.dart';
 import 'package:qrep/components/mybutton.dart';
 import 'package:qrep/components/my_textfield.dart';
 import 'package:qrep/components/square_tile.dart';
+import 'package:qrep/pages/forgot_password_page.dart';
 
 class LoginPage extends StatefulWidget {
   final Function()? onTap;
@@ -118,10 +119,22 @@ class _LoginPageState extends State<LoginPage> {
                   padding: const EdgeInsets.symmetric(horizontal: 25.0),
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.end,
-                    children: const [
-                      Text(
-                        'Forgot Password?',
-                        style: TextStyle(color: Colors.white),
+                    children: [
+                      GestureDetector(
+                        onTap: () {
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) {
+                                return ForgotPasswordPage();
+                              },
+                            ),
+                          );
+                        },
+                        child: const Text(
+                          'Forgot Password?',
+                          style: TextStyle(color: Colors.red),
+                        ),
                       ),
                     ],
                   ),

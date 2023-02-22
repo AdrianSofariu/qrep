@@ -1,3 +1,4 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:qrep/auth_service.dart';
@@ -19,6 +20,7 @@ class _RegisterPageState extends State<RegisterPage> {
 
   final passwordController = TextEditingController();
   final confirmPasswordController = TextEditingController();
+  final usernameController = TextEditingController();
 
   // sign user up method
   void signUserUp() async {
@@ -35,11 +37,18 @@ class _RegisterPageState extends State<RegisterPage> {
     // try creating the user
     try {
       //check if password is confirmed
-      if (passwordController.text == confirmPasswordController.text) {
+      if (passwordController.text.trim() ==
+          confirmPasswordController.text.trim()) {
         await FirebaseAuth.instance.createUserWithEmailAndPassword(
-          email: emailController.text,
-          password: passwordController.text,
+          email: emailController.text.trim(),
+          password: passwordController.text.trim(),
         );
+        //add user detail to db
+        addUserDetails(
+          usernameController.text.trim(),
+          emailController.text.trim(),
+        );
+
         //pop the loading circle
         if (mounted) {}
         Navigator.pop(context);
@@ -61,6 +70,14 @@ class _RegisterPageState extends State<RegisterPage> {
         showErrorMessage('Wrong Password');
       }
     }
+  }
+
+  //add user details function
+  Future addUserDetails(String username, String email) async {
+    await FirebaseFirestore.instance.collection('users').doc(email).set({
+      'username': username,
+      'email': email,
+    }, SetOptions(merge: true));
   }
 
   //user error message
@@ -108,6 +125,13 @@ class _RegisterPageState extends State<RegisterPage> {
                 const SizedBox(
                   height: 25,
                 ),
+                //username textfield
+                MyTextField(
+                  controller: usernameController,
+                  hintText: 'Username',
+                  obscureText: false,
+                ),
+                const SizedBox(height: 10),
                 //email textfield
                 MyTextField(
                   controller: emailController,
