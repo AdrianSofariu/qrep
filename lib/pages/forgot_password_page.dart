@@ -24,11 +24,12 @@ class _ForgotPasswordPageState extends State<ForgotPasswordPage> {
     try {
       await FirebaseAuth.instance
           .sendPasswordResetEmail(email: emailController.text.trim());
+      if (!mounted) return;
       showDialog(
           context: context,
           builder: (context) {
-            return AlertDialog(
-              content: const Text('Password reset link sent! Check your email'),
+            return const AlertDialog(
+              content: Text('Password reset link sent! Check your email'),
             );
           });
     } on FirebaseAuthException catch (e) {
