@@ -1,9 +1,11 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:qrep/pages/auth_page.dart';
 import 'package:qrep/pages/homepage.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:qrep/pages/login_or_register_page.dart';
+import 'package:qrep/pages/profile_page.dart';
 import 'firebase_options.dart';
 import 'package:qrep/auth_service.dart';
 
@@ -33,6 +35,7 @@ class _MyAppState extends State<MyApp> {
   }
 }
 
+//sign out
 void signUserOut() {
   FirebaseAuth.instance.signOut();
   isloggedIn = false;
@@ -49,10 +52,11 @@ class RootPage extends StatefulWidget {
 class _RootPageState extends State<RootPage> {
   int currentPage = 0;
 
-  //final user = FirebaseAuth.instance.currentUser!;
+  final user = FirebaseAuth.instance.currentUser!;
 
-  List<Widget> pages = const [
-    HomePage(),
+  List<Widget> pages = [
+    const HomePage(),
+    ProfilePage(),
   ];
 
   @override
