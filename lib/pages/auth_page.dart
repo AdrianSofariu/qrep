@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:qrep/main.dart';
 import 'package:qrep/pages/login_or_register_page.dart';
 import 'package:qrep/auth_service.dart';
+import 'package:qrep/read_data/get_userdetails.dart';
 
 class AuthPage extends StatelessWidget {
   const AuthPage({super.key});
@@ -15,6 +16,8 @@ class AuthPage extends StatelessWidget {
         builder: (context, snapshot) {
           if (snapshot.hasData) {
             isloggedIn = true;
+            final user = FirebaseAuth.instance.currentUser!;
+            Constants.getUserName(user.email.toString());
             return const RootPage();
           }
           // user is not logged in

@@ -5,6 +5,7 @@ import 'package:qrep/components/mybutton.dart';
 import 'package:qrep/components/my_textfield.dart';
 import 'package:qrep/components/square_tile.dart';
 import 'package:qrep/pages/forgot_password_page.dart';
+import 'package:qrep/read_data/get_userdetails.dart';
 
 class LoginPage extends StatefulWidget {
   final Function()? onTap;
@@ -38,6 +39,9 @@ class _LoginPageState extends State<LoginPage> {
         email: emailController.text,
         password: passwordController.text,
       );
+      //get username
+      final user = FirebaseAuth.instance.currentUser!;
+      Constants.getUserName(user.email.toString());
       //pop the loading circle
       if (mounted) {}
       Navigator.pop(context);

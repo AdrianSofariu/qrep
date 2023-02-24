@@ -1,6 +1,6 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:qrep/read_data/get_username.dart';
+import 'package:qrep/read_data/get_userdetails.dart';
 
 class ProfilePage extends StatelessWidget {
   ProfilePage({super.key});
@@ -23,15 +23,16 @@ class ProfilePage extends StatelessWidget {
                   height: 50,
                 ),
                 //greet user
-                const Text(
-                  'Hello, ',
-                  style: TextStyle(color: Colors.white),
+                Text(
+                  'Hello, ${Constants.userName.toString()}!',
+                  style: const TextStyle(color: Colors.white),
                 ),
-                GetUserName(documentId: user.email.toString()),
+                //GetUserName(documentId: user.email.toString()),
+                /*Text(Constants.userName.toString()),
                 const Text(
                   '!',
                   style: TextStyle(color: Colors.white),
-                )
+                )*/
               ],
             ),
           ),
