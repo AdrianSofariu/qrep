@@ -1,5 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:qrep/pages/add_post.dart';
 import 'package:qrep/read_data/get_post.dart';
 
 class Explorer extends StatefulWidget {
@@ -29,7 +30,23 @@ class _ExplorerState extends State<Explorer> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('QRep'),
+        title: const Text('Posts'),
+        actions: [
+          IconButton(
+              onPressed: () {
+                Navigator.of(context).push(
+                  MaterialPageRoute(
+                    builder: (BuildContext context) {
+                      return const AddPostPage(); //to do
+                    },
+                  ),
+                );
+              },
+              icon: const Icon(
+                Icons.add_circle,
+                color: Colors.white,
+              ))
+        ],
       ),
       backgroundColor: Colors.black,
       body: Center(

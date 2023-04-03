@@ -1,6 +1,7 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:qrep/pages/auth_page.dart';
+import 'package:qrep/pages/explore_page.dart';
 import 'package:qrep/pages/homepage.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:qrep/pages/login_or_register_page.dart';
@@ -55,6 +56,7 @@ class _RootPageState extends State<RootPage> {
 
   List<Widget> pages = [
     const HomePage(),
+    const Explorer(),
     ProfilePage(),
   ];
 
@@ -107,6 +109,12 @@ class _RootPageState extends State<RootPage> {
                 color: Colors.white,
               ),
               label: 'Home'),
+          NavigationDestination(
+              icon: Icon(
+                Icons.explore,
+                color: Colors.white,
+              ),
+              label: 'Explore'),
           NavigationDestination(
               icon: Icon(
                 Icons.person,
