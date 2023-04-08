@@ -1,12 +1,14 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
+import 'package:qrep/read_data/get_userdetails.dart';
 import 'package:qrep/read_data/get_username.dart';
 
 class GetPost extends StatelessWidget {
   final String documentId;
+  final Function deleteFunction;
 
-  const GetPost({super.key, required this.documentId});
+  const GetPost({super.key, required this.documentId, required this.deleteFunction});
 
   @override
   Widget build(BuildContext context) {
@@ -35,12 +37,20 @@ class GetPost extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 //post title
-                Text(
-                  '${data['title']}',
-                  style: const TextStyle(
-                      fontSize: 18,
-                      fontWeight: FontWeight.bold,
-                      color: Colors.greenAccent),
+                Row(
+                  children: [
+                    Text(
+                      '${data['title']}',
+                      style: const TextStyle(
+                          fontSize: 18,
+                          fontWeight: FontWeight.bold,
+                          color: Colors.greenAccent),
+                    ),
+                    const Text('         '),
+                    Constants.userEmail == data['author'] ? 
+                    ElevatedButton(onPressed: () => deleteFunction(documentId), child: const Text('Delete', style: TextStyle(color: Colors.white),)) :
+                    const Text(''),
+                  ],
                 ),
                 const SizedBox(height: 12),
                 //post text

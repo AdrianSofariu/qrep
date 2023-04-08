@@ -41,6 +41,12 @@ class _ExplorerState extends State<Explorer> {
     }
   }
 
+   Future deletePost(String id) async {
+    await FirebaseFirestore.instance.collection('questions').doc(id).delete();
+    docIDs.clear();
+    setState(() {});
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -77,7 +83,7 @@ class _ExplorerState extends State<Explorer> {
                     itemCount: docIDs.length,
                     itemBuilder: (context, index) {
                       return ListTile(
-                        title: GetPost(documentId: docIDs[index]),
+                        title: GetPost(documentId: docIDs[index], deleteFunction: deletePost,),
                       );
                     },
                   );
