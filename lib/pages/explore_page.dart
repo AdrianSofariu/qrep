@@ -26,6 +26,21 @@ class _ExplorerState extends State<Explorer> {
         );
   }
 
+  //navigate to AddPost Page
+  navigateAndDisplayPage(BuildContext context) async {
+    final result = await Navigator.push(
+      context,
+      MaterialPageRoute(builder: (context) => const AddPostPage()),
+    );
+
+    //reload the widget
+    if(result)
+    {
+      docIDs.clear();
+      setState(() {});
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -34,13 +49,14 @@ class _ExplorerState extends State<Explorer> {
         actions: [
           IconButton(
               onPressed: () {
-                Navigator.of(context).push(
+                /*Navigator.of(context).push(
                   MaterialPageRoute(
                     builder: (BuildContext context) {
                       return const AddPostPage(); //to do
                     },
                   ),
-                );
+                );*/
+                navigateAndDisplayPage(context);
               },
               icon: const Icon(
                 Icons.add_circle,

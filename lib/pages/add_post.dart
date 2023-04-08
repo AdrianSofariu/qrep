@@ -1,6 +1,7 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
-
 import '../components/my_textfield.dart';
+import '../read_data/get_userdetails.dart';
 
 class AddPostPage extends StatefulWidget {
   const AddPostPage({super.key});
@@ -23,12 +24,29 @@ class _AddPostPageState extends State<AddPostPage> {
     for (var controller in _tagControllers) {
       controller.dispose();
     }
+    titleController.dispose();
+    textController.dispose();
     super.dispose();
   }
 
   //send post to firebase
-  void submitPost() async {
-    //to do
+  Future submitPost(String title, String text) async {
+    //build tag list
+    List<String> tags = [];
+    for(var controller in _tagControllers){
+        tags.add(controller.text.trim());
+    }
+    //add document to firebase collection
+    await FirebaseFirestore.instance.collection('questions').add({
+      'author': Constants.userEmail,
+      'title' : title,
+      'text' : text,
+      'time' : Timestamp.now(),
+      'tags' : tags,
+    });
+    if(mounted){
+      Navigator.pop(context, true);
+    }
   }
 
   @override
@@ -87,11 +105,19 @@ class _AddPostPageState extends State<AddPostPage> {
                 Container(
                   alignment: Alignment.bottomCenter,
                   child: SizedBox(
-                    child: ElevatedButton(
-                      onPressed: submitPost,
-                      style:
-                          ElevatedButton.styleFrom(backgroundColor: Colors.red),
-                      child: const Text('Submit Post'),
+                    child: GestureDetector(
+                      onTap: () => submitPost(titleController.text.trim(), textController.text.trim()),
+                      child: Container(
+                        decoration: const BoxDecoration(
+                          color: Colors.red,
+                          borderRadius: BorderRadius.all(Radius.circular(20)),
+                        ),
+                        width: 100,
+                        height: 50,
+                        
+                        alignment: Alignment.center,
+                        child: const Text('Submit Post', style: TextStyle(color: Colors.white,),),
+                      ),
                     ),
                   ),
                 )

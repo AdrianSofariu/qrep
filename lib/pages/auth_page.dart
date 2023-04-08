@@ -18,6 +18,7 @@ class AuthPage extends StatelessWidget {
             isloggedIn = true;
             final user = FirebaseAuth.instance.currentUser!;
             Constants.getUserName(user.email.toString());
+            Constants.getUserEmail(user.email.toString());
             return const RootPage();
           }
           // user is not logged in
