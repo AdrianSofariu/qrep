@@ -16,7 +16,7 @@ class _AddPostPageState extends State<AddPostPage> {
 
   final List<TextEditingController> _tagControllers = [];
   int controllerscount = 1;
-  int tagfieldscount = 1;
+  int tagfieldscount = 0;
 
   @override
   void dispose() {
