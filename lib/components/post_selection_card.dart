@@ -5,8 +5,8 @@ import 'package:qrep/models/post.dart';
 import 'package:qrep/read_data/get_userdetails.dart';
 import 'package:qrep/read_data/get_username.dart';
 
-Widget postCard(
-    BuildContext context, DocumentSnapshot document, Function deleteFunction) {
+Widget postSelectionCard(
+    BuildContext context, DocumentSnapshot document, Function addFunction) {
   final post = Post.fromSnapshot(document);
 
   //convert timestamp to datetime
@@ -29,15 +29,11 @@ Widget postCard(
           //const Text('         '),
           Constants.userEmail == post.author
               ? ElevatedButton(
-                  onPressed: () => deleteFunction(post.documentID),
-                  style: ElevatedButton.styleFrom(
-                    backgroundColor: Colors.red,
-                  ),
+                  onPressed: () => addFunction(post),
                   child: const Text(
-                    'Delete',
+                    'Add',
                     style: TextStyle(color: Colors.white),
-                  ),
-                )
+                  ))
               : const Text(''),
         ],
       ),

@@ -1,23 +1,25 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
-import 'package:qrep/components/post_card.dart';
+import 'package:qrep/components/post_selection_card.dart';
+import 'package:qrep/models/checklist_item.dart';
 import 'package:qrep/models/post.dart';
-import 'package:qrep/pages/add_post.dart';
+import 'package:qrep/pages/review_doc_page.dart';
 
-class Explorer extends StatefulWidget {
-  const Explorer({super.key});
+class Selector extends StatefulWidget {
+  const Selector({super.key});
 
   @override
-  State<Explorer> createState() => _ExplorerState();
+  State<Selector> createState() => _SelectorState();
 }
 
-class _ExplorerState extends State<Explorer> {
+class _SelectorState extends State<Selector> {
   //document IDs
   List<String> docIDs = [];
   final TextEditingController _searchController = TextEditingController();
 
   List _resultsList = [];
   List _allResults = [];
+  final List _selectedItems = [];
   Future? resultsLoaded;
 
   //get docIDs
@@ -49,29 +51,53 @@ class _ExplorerState extends State<Explorer> {
     return "complete";
   }
 
-  //navigate to AddPost Page
-  navigateAndDisplayPage(BuildContext context) async {
-    final result = await Navigator.push(
-      context,
-      MaterialPageRoute(builder: (context) => const AddPostPage()),
-    );
-
-    //reload the widget
-    if (result != null) {
-      //docIDs.clear();
-      setState(() {
-        getDocumentsFromFirebase();
-      });
+  //convert the list of posts to a list of posts and bools for a checklist
+  //and navigate to AddPost Page
+  navigateAndDisplayPage(BuildContext context) {
+    List<ListItem> posts = [];
+    for (var post in _selectedItems) {
+      posts.add(ListItem(post: post, isChecked: true));
     }
+    Navigator.push(
+      context,
+      MaterialPageRoute(builder: (context) => ReviewPDF(items: posts)),
+    );
   }
 
-  //function to delete a post
-  Future deletePost(String id) async {
-    await FirebaseFirestore.instance.collection('questions').doc(id).delete();
-    //docIDs.clear();
-    setState(() {
-      getDocumentsFromFirebase();
-    });
+  //alert dialog for completed process
+  showAlertDialog(BuildContext context) {
+    // set up the button
+    Widget okButton = TextButton(
+      child: const Text("OK"),
+      onPressed: () {
+        Navigator.pop(context);
+      },
+    );
+
+    // set up the AlertDialog
+    AlertDialog alert = AlertDialog(
+      title: const Text("Alert"),
+      content: const Text("Post was added successfully."),
+      actions: [
+        okButton,
+      ],
+    );
+
+    // show the dialog
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return alert;
+      },
+    );
+  }
+
+  //function to add a post to the pdf
+  void addToPdf(Post post) {
+    _selectedItems.add(post);
+
+    //display a message Box to show completed action
+    showAlertDialog(context);
   }
 
   //add listener to the text controller
@@ -131,21 +157,14 @@ class _ExplorerState extends State<Explorer> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Posts'),
+        title: const Text('Choose some questions!'),
         actions: [
           IconButton(
               onPressed: () {
-                /*Navigator.of(context).push(
-                  MaterialPageRoute(
-                    builder: (BuildContext context) {
-                      return const AddPostPage(); //to do
-                    },
-                  ),
-                );*/
                 navigateAndDisplayPage(context);
               },
               icon: const Icon(
-                Icons.add_circle,
+                Icons.edit_document,
                 color: Colors.white,
               ))
         ],
@@ -172,23 +191,10 @@ class _ExplorerState extends State<Explorer> {
               style: const TextStyle(color: Colors.white),
             ),
             Expanded(
-              child: /*FutureBuilder(
-                future: getDocId(),
-                builder: (context, snapshot) {
-                  return ListView.builder(
-                    itemCount: docIDs.length,
-                    itemBuilder: (context, index) {
-                      return ListTile(
-                        title: GetPost(documentId: docIDs[index], deleteFunction: deletePost,),
-                      );
-                    },
-                  );
-                },
-              ),*/
-                  ListView.builder(
+              child: ListView.builder(
                 itemCount: _resultsList.length,
                 itemBuilder: (BuildContext context, int index) =>
-                    postCard(context, _resultsList[index], deletePost),
+                    postSelectionCard(context, _resultsList[index], addToPdf),
               ),
             ),
           ],

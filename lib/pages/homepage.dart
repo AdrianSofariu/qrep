@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:qrep/auth_service.dart';
-import 'package:qrep/pages/explore_page.dart';
 import 'package:qrep/pages/login_or_register_page.dart';
+import 'package:qrep/pages/selection_page.dart';
 
 class HomePage extends StatelessWidget {
   const HomePage({super.key});
@@ -66,7 +66,7 @@ class HomePage extends StatelessWidget {
                       MaterialPageRoute(
                         builder: (BuildContext context) {
                           if (isloggedIn) {
-                            return const Explorer();
+                            return const Selector();
                           }
                           //modify button route
                           else {
@@ -77,7 +77,7 @@ class HomePage extends StatelessWidget {
                     );
                   },
                   child: const Text(
-                    'Get started!',
+                    'Create Quiz!',
                     style: TextStyle(
                       fontSize: 25,
                       color: Colors.white,
