@@ -11,7 +11,8 @@ Widget postSelectionCard(
 
   //convert timestamp to datetime
   DateTime myDateTime = (post.time).toDate();
-  DateFormat.yMMMd().add_jm().format(myDateTime);
+  //DateFormat.yMMMd().add_jm().format(myDateTime);
+  String formattedDate = DateFormat('yyyy-MM-dd - HH:mm').format(myDateTime);
 
   return Padding(
     padding: const EdgeInsets.all(8.0),
@@ -65,7 +66,8 @@ Widget postSelectionCard(
       GetUserName(documentId: post.author),
       //time
       Text(
-        myDateTime.toString(),
+        //myDateTime.toString(),
+        formattedDate,
         style: const TextStyle(color: Colors.grey),
       ),
       const SizedBox(height: 35),

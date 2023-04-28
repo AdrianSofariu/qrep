@@ -43,6 +43,16 @@ dependencies:
   #DateTime
   intl: ^0.17.0
 
+  #ChatGPT
+  chat_gpt_sdk: ^2.1.2
+
+  #for api calls
+  http: ^0.13.5
+  dio: ^5.1.1
+
+  #Some design elements
+  velocity_x:
+
   # The following adds the Cupertino Icons font to your application.
   # Use with the CupertinoIcons class for iOS style icons.
   cupertino_icons: ^1.0.2

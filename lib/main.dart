@@ -60,7 +60,7 @@ class _RootPageState extends State<RootPage> {
   List<Widget> pages = [
     const HomePage(),
     const Explorer(),
-    ProfilePage(),
+    const ProfilePage(),
   ];
 
   @override
