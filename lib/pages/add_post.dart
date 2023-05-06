@@ -33,18 +33,18 @@ class _AddPostPageState extends State<AddPostPage> {
   Future submitPost(String title, String text) async {
     //build tag list
     List<String> tags = [];
-    for(var controller in _tagControllers){
-        tags.add(controller.text.trim());
+    for (var controller in _tagControllers) {
+      tags.add(controller.text.trim());
     }
     //add document to firebase collection
     await FirebaseFirestore.instance.collection('questions').add({
       'author': Constants.userEmail,
-      'title' : title,
-      'text' : text,
-      'time' : Timestamp.now(),
-      'tags' : tags,
+      'title': title,
+      'text': text,
+      'time': Timestamp.now(),
+      'tags': tags,
     });
-    if(mounted){
+    if (mounted) {
       Navigator.pop(context, true);
     }
   }
@@ -54,7 +54,7 @@ class _AddPostPageState extends State<AddPostPage> {
     return Scaffold(
       backgroundColor: Colors.black,
       appBar: AppBar(
-        title: const Text('Dynamic Text Fields'),
+        title: const Text('Create Post'),
       ),
       body: Center(
         child: Padding(
@@ -106,7 +106,8 @@ class _AddPostPageState extends State<AddPostPage> {
                   alignment: Alignment.bottomCenter,
                   child: SizedBox(
                     child: GestureDetector(
-                      onTap: () => submitPost(titleController.text.trim(), textController.text.trim()),
+                      onTap: () => submitPost(titleController.text.trim(),
+                          textController.text.trim()),
                       child: Container(
                         decoration: const BoxDecoration(
                           color: Colors.red,
@@ -114,9 +115,13 @@ class _AddPostPageState extends State<AddPostPage> {
                         ),
                         width: 100,
                         height: 50,
-                        
                         alignment: Alignment.center,
-                        child: const Text('Submit Post', style: TextStyle(color: Colors.white,),),
+                        child: const Text(
+                          'Submit Post',
+                          style: TextStyle(
+                            color: Colors.white,
+                          ),
+                        ),
                       ),
                     ),
                   ),

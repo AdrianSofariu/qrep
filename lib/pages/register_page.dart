@@ -50,7 +50,7 @@ class _RegisterPageState extends State<RegisterPage> {
         );
 
         //pop the loading circle
-        if (mounted) {}
+        // ignore: use_build_context_synchronously
         Navigator.pop(context);
       } else {
         //pop the loading circle
