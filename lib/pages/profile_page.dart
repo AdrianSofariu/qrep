@@ -18,6 +18,13 @@ class _ProfilePageState extends State<ProfilePage> {
   final user = FirebaseAuth.instance.currentUser!;
   final TextEditingController _controller = TextEditingController();
   final List<ChatMessage> _messages = [];
+  List<Map<String, String>> conversations = [
+    Map.of({
+      "role": "assistant",
+      "content":
+          "The following is a conversation with an AI assistant of the QRep application. The assistant is helpful, creative, clever, and very friendly."
+    }),
+  ];
 
   //ChatGPT api
   late OpenAI openAI;
@@ -40,45 +47,60 @@ class _ProfilePageState extends State<ProfilePage> {
 
     _controller.clear();
 
+    conversations.add(Map.of({"role": "user", "content": message.text}));
+
     //send prompt to gpt model
     final request = ChatCompleteText(
-      messages: [
+      messages:
+          conversations /*[
         Map.of({
           "role": "assistant",
           "content":
               "The following is a conversation with an AI assistant of the QRep application. The assistant is helpful, creative, clever, and very friendly."
         }),
         Map.of({"role": "user", "content": message.text})
-      ],
-      maxToken: 500,
+      ]*/
+      ,
+      maxToken: 2000,
       model: ChatModel.gptTurbo,
     );
 
-    //subscribe to gpt stream and get the answer fragments in a single string
-    openAI.onChatCompletionSSE(request: request).listen((response) {
-      botResponse += response.choices[0].message!.content;
-    });
+    try {
+      //subscribe to gpt stream and get the answer fragments in a single string
+      openAI.onChatCompletionSSE(request: request).listen((response) {
+        botResponse += response.choices[0].message!.content;
+      });
 
-    //after getting all fragments display the message
-    openAI.onChatCompletionSSE(request: request).last.then((_) {
+      //after getting all fragments display the message
+      openAI.onChatCompletionSSE(request: request).last.then((_) {
+        ChatMessage botMessage =
+            ChatMessage(text: botResponse.trim(), sender: "Virtual Bud");
+        conversations
+            .add(Map.of({"role": "assistant", "content": botResponse}));
+        setState(() {
+          _isTyping = false;
+          _messages.insert(0, botMessage);
+        });
+      });
+    } on Exception catch (exception) {
+      //if we have errors display them as a message from the botS
       ChatMessage botMessage =
-          ChatMessage(text: botResponse.trim(), sender: "Virtual Bud");
-
+          ChatMessage(text: exception.toString(), sender: "Virtual Bud");
       setState(() {
         _isTyping = false;
         _messages.insert(0, botMessage);
       });
-    });
+    }
   }
 
   //connect to the OpenAi api
   @override
   void initState() {
     openAI = OpenAI.instance.build(
-        token: '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',
+        token: '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',
         baseOption: HttpSetup(
-            receiveTimeout: const Duration(seconds: 20),
-            connectTimeout: const Duration(seconds: 20)),
+            receiveTimeout: const Duration(seconds: 60),
+            connectTimeout: const Duration(seconds: 60)),
         isLog: true);
     super.initState();
   }
