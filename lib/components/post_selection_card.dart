@@ -2,7 +2,6 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:qrep/models/post.dart';
-import 'package:qrep/read_data/get_userdetails.dart';
 import 'package:qrep/read_data/get_username.dart';
 
 Widget postSelectionCard(
@@ -28,14 +27,13 @@ Widget postSelectionCard(
                 color: Colors.greenAccent),
           ),
           //const Text('         '),
-          Constants.userEmail == post.author
-              ? ElevatedButton(
-                  onPressed: () => addFunction(post),
-                  child: const Text(
-                    'Add',
-                    style: TextStyle(color: Colors.white),
-                  ))
-              : const Text(''),
+          ElevatedButton(
+            onPressed: () => addFunction(post),
+            child: const Text(
+              'Add',
+              style: TextStyle(color: Colors.white),
+            ),
+          )
         ],
       ),
       const SizedBox(height: 12),

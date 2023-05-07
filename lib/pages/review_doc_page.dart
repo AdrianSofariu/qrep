@@ -22,6 +22,7 @@ class _ReviewPDFState extends State<ReviewPDF> {
   Future<void> createDocument() async {
     //create the pdf variable
     final pdf = pdfWidgets.Document();
+    final myfont = await PdfGoogleFonts.montserratRegular();
 
     //add content to the pdf
     pdf.addPage(
@@ -35,6 +36,7 @@ class _ReviewPDFState extends State<ReviewPDF> {
               pdfWidgets.Text(
                 _titleController.text,
                 style: pdfWidgets.TextStyle(
+                  font: myfont,
                   fontWeight: pdfWidgets.FontWeight.bold,
                   fontSize: 25,
                 ),
@@ -52,6 +54,7 @@ class _ReviewPDFState extends State<ReviewPDF> {
                 pdfWidgets.Text(
                   '${index + 1}. ${_checkedItems[index].post.title}',
                   style: pdfWidgets.TextStyle(
+                    font: myfont,
                     fontWeight: pdfWidgets.FontWeight.bold,
                     fontSize: 18,
                   ),
@@ -59,7 +62,10 @@ class _ReviewPDFState extends State<ReviewPDF> {
                 pdfWidgets.SizedBox(height: 12),
                 pdfWidgets.Text(
                   _checkedItems[index].post.text,
-                  style: const pdfWidgets.TextStyle(fontSize: 15),
+                  style: pdfWidgets.TextStyle(
+                    font: myfont,
+                    fontSize: 15,
+                  ),
                   textAlign: pdfWidgets.TextAlign.justify,
                 ),
                 pdfWidgets.SizedBox(height: 20),
