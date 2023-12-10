@@ -172,20 +172,7 @@ class _ExplorerState extends State<Explorer> {
               style: const TextStyle(color: Colors.white),
             ),
             Expanded(
-              child: /*FutureBuilder(
-                future: getDocId(),
-                builder: (context, snapshot) {
-                  return ListView.builder(
-                    itemCount: docIDs.length,
-                    itemBuilder: (context, index) {
-                      return ListTile(
-                        title: GetPost(documentId: docIDs[index], deleteFunction: deletePost,),
-                      );
-                    },
-                  );
-                },
-              ),*/
-                  ListView.builder(
+              child: ListView.builder(
                 itemCount: _resultsList.length,
                 itemBuilder: (BuildContext context, int index) =>
                     postCard(context, _resultsList[index], deletePost),
