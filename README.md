@@ -1,16 +1,6 @@
 # qrep
 
-A new Flutter project.
+My first flutter project is this mobile app, which I made to help people prepare for exams easier.
+It is a question database, that can easily be searched using the tag system.
 
-## Getting Started
-
-This project is a starting point for a Flutter application.
-
-A few resources to get you started if this is your first Flutter project:
-
-- [Lab: Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://docs.flutter.dev/cookbook)
-
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+I also integrated the free tier gpt-3 model. (update: it does not work anymore as the library was changed)
