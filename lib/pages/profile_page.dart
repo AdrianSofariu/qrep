@@ -97,7 +97,7 @@ class _ProfilePageState extends State<ProfilePage> {
   @override
   void initState() {
     openAI = OpenAI.instance.build(
-        token: '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',
+        token: '',
         baseOption: HttpSetup(
             receiveTimeout: const Duration(seconds: 60),
             connectTimeout: const Duration(seconds: 60)),
