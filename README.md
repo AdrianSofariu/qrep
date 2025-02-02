@@ -13,4 +13,4 @@
 ## 🤖 AI Integration (Now Deprecated)  
 Previously, Q-Rep featured **GPT-3 integration** as an AI assistant for personalized study help. However, due to **library changes**, this feature is currently unavailable.  
 
-🚀 **Built with Flutter | Firebase for authentication & storage | Dart for PDF generation**  
+🚀 **Built with Flutter | Firebase for authentication & storage |**  
